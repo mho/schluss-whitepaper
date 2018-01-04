@@ -1,0 +1,185 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Schluss personal data locker}
+\author{Maurice Verheesen}
+\date{November 2017}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+
+\begin{document}
+
+\maketitle
+\begin{abstract}
+The Internet is lacking one giant thing: storage. It's this omission that is causing
+a lot of problems with personal data these days. Personal data now needs to be in the hands of you yourself or somebody else, who then gains control over it.
+
+Currently there are two modes of thinking about securing personal data. The first
+premise is that it does not matter where the data actually resides. The second one
+is the premise that it actually does matter where the data is.
+
+Choosing a point of view determines a lot of design choices. For instance, if it
+does not matter where the data is, solutions to enable security focus on strong
+encryption. One of the most interesting developments in this area are the homo- and
+polymorphic encryption solutions that are being developed. Also blockchain-esque solutions fall in this category.
+
+If it does matter where the data resides, a solutions becomes more compatible with
+current European privacy regulation. For instance, according to this law organizations must give certain safeguards about the data storage. This makes it impossible for US companies to comply with European law, because of the regulation that allow the US government access to any data stored by an US based company. Solutions in this category are usually more traditional, based on "vaults" that reside in guarded clouds with
+certain guarantees.
+
+Most solutions try to lock people into some sort of platform or ecosystem. The reason for this is partly technical (much more easier to do identity, authorization and storage on one platform) and partly for business reasons. Since investors will only invest in organizations that return value. The value in this case being the lockin to a
+platform.
+
+The future will decide which of the premises is the prevailing one. Our contribution
+is the proposal for a hybrid solution and next to this, a ``trias politica'' for data
+storage (and actually transfer). The hybrid part is based on the idea that the needs
+to be distributed in order to gain Independence of storage providers (no lockin). The ``trias politica'' is a requirement to ensure compatibility. Almost never has one platform one all users worldwide. We believe it's an illusion to think this way. So we
+need compatibility between storage solutions. Together these two ideas form a high level design (or way of thinking) for independent secure storage on the Internet.
+
+These are the two contributions be set forth in this whitepaper.
+\end{abstract}
+
+\tableofcontents
+
+% storage is lacking, vervelend want lockin door mega platvormen
+% welke data?
+% Analytics moet mogelijk blijven. Parallel met microservices en distributed fs, dat de trend
+% is juist analystics te doen op gedistribueerde data, alleen is toegang nodig.
+% informatie beveiliging CIA
+% legal 1 persoonsgegeven?
+% legal 2 waar staat de data
+%  conclusie: niet alles, maar zo goed mogelijke kluis
+%  
+%  adoptie voor gedistribueerde systemen laat te wensen over door netwerk effecten.
+%  scheiding der machten als oplossing voor deze netwerk effecten, waardoor de 
+%  compatability en trialability omhoog gaat. Daarnaast is UI/UX extreem belangrijk
+%  om de preceived benefit meteen duidelijk te maken.
+%  
+%  alternatieven:
+%  - bron data blijft bij bron, verwijzingen via LOD (Solid) of attributes (Sovrin, IRMA)
+%  - blockchain: maidsafe, filecoin, storj.io, storro
+%  - homo and polymorphic encryption, using encrypted data without the need to decrypt it
+%  
+% ontwerp:
+% 1 UI/UX: verhaal over naar de TV lopen, kastje in de hand
+% 2 scheiding van machten, beschrijving van de drie onderdelen:
+%       id
+%       auth
+%       stor
+% 3 eerste test ontwerp: beddenapp
+
+\section{Introduction}
+
+\section{The problems with data storage}
+% storage is lacking, vervelend want lockin door mega platvormen
+% welke data?
+% Analytics moet mogelijk blijven. Parallel met microservices en distributed fs, dat de trend
+% is juist analystics te doen op gedistribueerde data, alleen is toegang nodig.
+% informatie beveiliging CIA
+% legal 1 persoonsgegeven?
+% legal 2 waar staat de data
+%  conclusie: niet alles, maar zo goed mogelijke kluis
+Internet is lacking storage. Historically the Internet 
+
+
+\section{Design requirements}
+\section{Alternatives}
+%  alternatieven:
+%  - bron data blijft bij bron, verwijzingen via LOD (Solid) of attributes (Sovrin, IRMA)
+%  - blockchain: maidsafe, filecoin, storj.io, storro
+%  - homo and polymorphic encryption, using encrypted data without the need to decrypt it
+%
+Much research is being done on the question how can we safeguard our personal data in a privacy compliant way and be able to control our data and let other use it the way we let them. In this section we discuss only the most relevant technologies related or opposing our way of thinking.
+
+\subsection{Source data}
+This way of thinking accepts the status quo in some domains where there might for instance be a legal requirement to keep data about persons. That means the system that has the monopoly on storing this data, must be used somehow. Solution then focus on a versatile ways to either copy or link to this data. Blockchain solutions exists that propose to move the data from the existing databases to the (private) blockchain. This way people can use the blockchain to access the data in a transparent manner. Other solutions link data from the blockchain to the source database.
+
+\subsection{Linked data}
+Similar there is a revival going on in the semantic RDF linked data field of science. These solutions also accept that there are often large source databases with curated data. These solutions find ways to enable distributed storage and identity with links to source databases (for instance Solid).
+
+\subsection{Attribute based identity or data sharing}
+Then there are solutions that only share a small amount of data, often via links that can be validated. Think about diploma's that one receives from a university. In systems like Sovrin, a third party can ask an identity to present proof of a diploma upon which this request is then executed by the university delivering an attribute attesting to the fact that you have a diploma. IRMA works in a similar fashion, where you can have a wallet containing validated attributes. This way only relevant data is shared. For instance, when buying alcohol, the NFC connected smart phone validates that the holder is above 18.
+
+\subsection{Blockchain storage}
+there are many attempts to build a storage system that contains some sort of blockchain. Examples are but not limited to: maidsafe, bitdust, filecoin/IPFS, storj.io, storro and many more. From these we like IPFS, Bitdust and Storro the most, since they start out as a distributed storage and only separately employ a blockchain for their business case.
+
+\section{Design of the Schluss personal data locker}
+\subsection{UI/UX}
+verhaal naar de tv lopen
+
+\subsection{Digital Trias Politica}
+Separation of power on the Internet can be achieved if people gain independence on three separate functions:
+
+\begin{itemize}
+    \item Identity
+    \item Authorization
+    \item Storage
+\end{itemize}
+
+These functions are used to organize basic security (CIA or confidentiality, integrity and availability) of data. Usually at least two of these functions are integrated into a platform. For instance, OAuth manages authorizations, but not all ID's are OAuth capable. So OAuth combines identity and authorization. A UNIX file system saves the identity and group for every file in the file system itself. Google can store data and share it, but only if you have a Google identity. 
+
+Our premise is that the Internet needs to separate these three functions into independent compatible functional blocks or services. This way people can combine different identity, authorization and storage solutions from different suppliers.
+
+This has three advantages. First the set\footnote{NB: you can have multiple sets of combinations, depending on the type of data and the choices made within the culture of the data. For instance, medical data will use different ways to identify, authorize and store data than data about the energy consumption of your house.} of these three choices will safeguard of the data. Second, being able to choose generates independence of suppliers. And third it boosts compatibility and thus adoption of distributed solutions.
+
+%die dire dingen invullen en data is veilig het kunnen kiezen zorgt voor indepence
+
+In this section, we will discuss each of the three functions and formulate generic actions that need to be done within a function.
+
+\subsubsection{Identity}
+There are many identity solutions out there. Basically, one wants to convince another party that you are actually you. Normally you have some sort of identifier or token that is a representation of your identity (passport, email address, Kerberos ticket etc). This token can be unique and preferably one can guarantee uniqueness of a token\footnote{Only one passport exists for you, although you can have many passports, each passport will have a separate namespace (i.e. country) and is thus unique in the world, each time identifying you in some context.}
+
+Next to some sort of (unique) token, usually a trusted third party is needed. This party can vouch for you (it can can independently verify the authenticity of the token) and thus (to some degree) guarantee the identity. This mechanism is based on trust. For instance in the case of the passport, you verify that the passport is actually not a fake. If it is not a fake, then you rely on the authority of the country that they did a proper job of identifying the person when the passport was issued.
+
+The last characteristic is that you as a receiver trust this third party. You trust this party when it verifies a token and thus by extension you are sure enough of the identity of the person that is presenting the token. 
+
+We do not propose any changes to these widely adopted principles of identification. Albeit that we propose a mechanism that allows for many existing tokens or identities to be used. Some tokens however will not allow for certain transactions. The judged of what tokens are acceptable is the authorization layer. But in general nearly all tokens are excepted by our proposed system. This is because it does not care about the token, it only passes it to an authoritative layer that should place requirements on the token (in order to make an assessment of being sure enough of the identity).
+
+\subsubsection{Authorization}
+Authorization is a mechanism to check if a certain action that an actor initiates is allowed (by some rules). Usually the authorization layer is tight closely to the identity and storage layers. There are already many independent authorization frameworks. We believe that in the future these authorization frameworks move to the blockchain. A logical consequence of blockchain in general will be smart contracts managing authorizations for specific verticals (i.e. smart contracts for the notary sector, which deal with buying a house).
+
+We propose an API standard for Rule Based Access Control systems (RBAC) on the blockchain. Each domain (for instance the notary sector) runs it's own contracts on a public (or maybe even private!) blockchain. These contracts formulate the rules by which a domain acts with it's actors. For instance, if you want to share test results with a doctor, the blockchain smart contract will define the rules if and when this is allowed. It will also verify the identity of the actors and place a transaction on it's blockchain representing a decision.
+
+This way the smart contract only executes and verifies that the transaction was made according to the rules and all parties have been identified (to the level and in away of what is necessary according to the contract).
+
+The storage layer is only interested in valid decisions on the blockchain and another identity check (does the identity of the requester of data match the one in decision on the specific blockchain?). So It does not care about the specific identities. The contract has code that knows what type of identity to accept and by which rules data can be made available.
+
+\subsubsection{Storage}
+The storage necessary in this trias politica is based on a distributed mechanism. Any device in the world can share storage to a distributed pool of storage that this system can make use of. There are two requirements: storage should be guaranteed available and without a hash it should be impossible to resolve the blob of data (better: the file should not reside completely on one device). Nice to have would be an insurance that data has been deleted from the network. Conceptually, the storage is in the form of a directory and the data is encrypted. The storage layer does not know what type of data is stored in the files. It will only listen to validated requests, made by a blockchain (decision is made and can be found on the blockchain, if that decision can be found and validated by the storage, data hash is delivered). All this is stored in an access log, saved (one way, can't be deleted) in the users directory. This way there is always a log of all requests to a certain users data. In some cases for instance very sensitive data, it recrypts (transcrypts?) the data especially for the identity used in the blockchain decision, in order to be sure that only the holder of the private key of the public key of the identity can decrypt the data.
+
+The schluss vault data management application actually holds "state" information about the data. This application is the only thing that encrypts data for a specific user. That way, if that step has not been done by the user, one might fool the blockchain somehow and get a valid hash link, but the data will not be encrypted for the receiver.
+
+\subsection{Demo application}
+beddenapp
+This layer ties the three others together. It can be used to trigger the requests to the authorization layers, makes sure data is only encrypted for validated receiving users and can access the transaction log of all storage access.
+
+\subsection{Generic transaction flow}
+receive a request from a doctor wanting to take a look. 
+
+First the identities are checked. Is the request made by a doctor to a person. Then it is checked if access is allowed. Are the person and this doctor in a patient/doctor relationship? And has the user allowed this doctor to view this specific data? 
+
+If all this checks out, the storage layer accepts the request and delivers a hashed link to the requesting party, the data at the end of this link on the distributed storage is encrypted with public key of the receiver and the storage\footnote{Or you could do this in the authorisation layer, this layer already has the link, it looks in the first part of the data and if the signature checks out that it's the right type of data then it's oke. how to prevent faking this and sending the motherload?} makes sure only  the requested type (or even specific file) is encrypted and released via the link.
+
+public and private keys are managed according to the identity and authorization (smart contracts). So some might exist online, may not even be neccessary and some reside in a HSM, for instance an government issued ID card with PKI signed private and public keys.
+
+%\section{Example implementation}
+% TODO: hier dus ook een transaction diagram laten zien
+
+\section{Discussion}
+There is a theory which states that if ever anyone discovers exactly what the Universe is for and why it is here, it will instantly disappear and be replaced by something even more bizarre and inexplicable.
+There is another theory which states that this has already happened.
+
+%\begin{figure}[h!]
+%centering
+%\includegraphics[scale=1.7]{universe.jpg}
+%\caption{The Universe}
+%\label{fig:univerise}
+%\end{figure}
+
+\section{Conclusion}
+``I always thought something was fundamentally wrong with the universe'' \citep{adams1995hitchhiker}
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}
