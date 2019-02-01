@@ -1,12 +1,17 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 
-\title{Schluss personal data locker}
+\title{Schluss personal data locker/vault/safe}
 \author{Maurice Verheesen}
-\date{November 2017}
+\date{December 2017 \\ v0.85 DRAFT}
 
+\usepackage{hyperref}
 \usepackage{natbib}
 \usepackage{graphicx}
+\usepackage{draftwatermark}
+\SetWatermarkText{DRAFT}
+\SetWatermarkScale{5}
+\SetWatermarkColor[gray]{0.4}
 
 \begin{document}
 
@@ -28,14 +33,12 @@ If it does matter where the data resides, a solutions becomes more compatible wi
 current European privacy regulation. For instance, according to this law organizations must give certain safeguards about the data storage. This makes it impossible for US companies to comply with European law, because of the regulation that allow the US government access to any data stored by an US based company. Solutions in this category are usually more traditional, based on "vaults" that reside in guarded clouds with
 certain guarantees.
 
-Most solutions try to lock people into some sort of platform or ecosystem. The reason for this is partly technical (much more easier to do identity, authorization and storage on one platform) and partly for business reasons. Since investors will only invest in organizations that return value. The value in this case being the lockin to a
-platform.
+Most solutions try to lock people into some sort of platform or ecosystem. The reason for this is partly technical (much more easier to do identity, authorization and storage on one platform) and partly for business reasons. Since investors will only invest in organizations that return value. The value in this case being the lockin to a platform.
 
 The future will decide which of the premises is the prevailing one. Our contribution
 is the proposal for a hybrid solution and next to this, a ``trias politica'' for data
 storage (and actually transfer). The hybrid part is based on the idea that the needs
-to be distributed in order to gain Independence of storage providers (no lockin). The ``trias politica'' is a requirement to ensure compatibility. Almost never has one platform one all users worldwide. We believe it's an illusion to think this way. So we
-need compatibility between storage solutions. Together these two ideas form a high level design (or way of thinking) for independent secure storage on the Internet.
+to be distributed in order to gain independence of storage providers (no lockin). The ``trias politica'' is a requirement to ensure compatibility. Almost never has one platform one all users worldwide. We believe it's an illusion to think this way. So we need compatibility between storage solutions. Together these two ideas form a high level design (or way of thinking) for independent secure storage on the Internet.
 
 These are the two contributions be set forth in this whitepaper.
 \end{abstract}
@@ -69,9 +72,63 @@ These are the two contributions be set forth in this whitepaper.
 %       stor
 % 3 eerste test ontwerp: beddenapp
 
-\section{Introduction}
+\section{Problem statement}
+``The Web has steadily evolved into an ecosystem of large, corporate-controlled mega-platforms which intermediate speech online'' \cite{mit_techreport}. 
+This has been a positive development, since these mega-platforms have enabled billions of people to share information. However the down side is in the word intermediate. Since these mega-platforms intermediate in our information exchange, they are creating a filter bubble \cite{Pariser:2011:FBI:2029079}. This filter bubble can lead to bias and censorship, since used algorithms to display information can't be audited and the mega-platforms present a "networked public sphere" that we often cannot oversee \cite{mit_techreport}. 
 
-\section{The problems with data storage}
+To tackle this influence, many in the tech community have fled to technology to save us \cite{save_internet}. However ``today’s mega-platforms are built on top of the Web’s already distributed and open protocol'' \cite{mit_techreport}. There are many new distributed storage and communication solutions designed today in the open source world. The problem is that many are not reaching a wide (enough) audience \cite{mit_techreport}.
+% er bestaan alternatieven, maar niet popular. Waarom?
+
+According to \cite{mit_techreport} ``the real issue to address is this natural tendency towards market consolidation''. They identify four challenges distributed systems face:
+\begin{enumerate}
+    \item Adoption; ease of use and network extranalities
+    \item Security
+    \item Monetization
+    \item Resisting market consolidation
+\end{enumerate}
+In this article we only focus on the first two challenges. Other documents (marketing and business strategy) explain the latter two.
+
+
+%\section{The problems with data storage}
+\section{Design requirements}
+In this section we numerate the design requirements for a solution that overcomes the adoption issues/factors highlighted in the previous section.
+
+\subsection{Stakeholders}
+\subsubsection{User perspective}
+Users want to be in control of their data but should not be difficult (privacy-by-design is the way to go, privacy paradox complicating things). 
+
+\subsubsection{Company perspective}
+Corporations want curated up-to-date information about their (potential) customers.
+
+\subsection{Other criteria}
+\subsubsection{Analytics and data manifestations}
+Companies still want to do analytics and users might want to let others or themselves run their own analytics on your own data. So analytics should be possible. These days data science infrastructure engineers are coming up with ways to store vast amounts of data, while making that data available for analytics. One of the concepts applied in these IT-infrastructures is that of distributing the data and even the computation \cite{kleppmann2017designing}.
+
+This means we have to look at the different forms data takes in digital systems. All these different manifestations of data need to be supported:
+\begin{itemize}
+    \item time series
+    \item (large) files
+    \item 'streaming' vs batch or 'replay'
+    \item almost Boolean like attributes
+    \item structured and standardize data vs unstructured data
+\end{itemize}
+
+\subsubsection{Security and privacy}
+Information security revolves around the core concepts of confidentiality, integrity and availability. For each of the data types we need to support CIA in the context of privacy-by-design and ease of use. Next to this we need to take into account privacy-by-design. One of the key elements of this design philosophy is checking for meta-data leakage.
+
+\subsubsection{Legal}
+Furthermore there are legal aspects that influence our design requirements. The first question is what is personal data? How do different jurisdictions mandate protection of this personal data? And does the physical location of the storage of this personal data matter?
+
+All of this makes us conclude that:
+
+We need to dictate and or reuse open standards in order to overcome network extranalities. An open platform will make adoption easier for other organizations to join and built upon.
+
+Ease of use has the focus. TODO: maybe insert technology adoption framework of Rogers. \cite{rogers2010diffusion}.
+
+We start with file based data (large, difficult on blockchain, attribute data has already a good solution and turning file based data into streaming data is a software issue)
+
+We also focus first on the Dutch and EU jurisdiction regarding personal data. That also means we will store data in the Netherlands (for now) in a distributed way. 
+
 % storage is lacking, vervelend want lockin door mega platvormen
 % welke data?
 % Analytics moet mogelijk blijven. Parallel met microservices en distributed fs, dat de trend
@@ -80,22 +137,20 @@ These are the two contributions be set forth in this whitepaper.
 % legal 1 persoonsgegeven?
 % legal 2 waar staat de data
 %  conclusie: niet alles, maar zo goed mogelijke kluis
-Internet is lacking storage. Historically the Internet 
 
 
-\section{Design requirements}
-\section{Alternatives}
+\section{Alternative solutions}
 %  alternatieven:
 %  - bron data blijft bij bron, verwijzingen via LOD (Solid) of attributes (Sovrin, IRMA)
 %  - blockchain: maidsafe, filecoin, storj.io, storro
 %  - homo and polymorphic encryption, using encrypted data without the need to decrypt it
 %
-Much research is being done on the question how can we safeguard our personal data in a privacy compliant way and be able to control our data and let other use it the way we let them. In this section we discuss only the most relevant technologies related or opposing our way of thinking.
+Research is being done on the question how can we safeguard our personal data in a privacy compliant way and be able to control our data and let other use it the way we let them. In this section we discuss only the most relevant technologies related or opposing our way of thinking.
 
-\subsection{Source data}
+\subsection{Source data concept}
 This way of thinking accepts the status quo in some domains where there might for instance be a legal requirement to keep data about persons. That means the system that has the monopoly on storing this data, must be used somehow. Solution then focus on a versatile ways to either copy or link to this data. Blockchain solutions exists that propose to move the data from the existing databases to the (private) blockchain. This way people can use the blockchain to access the data in a transparent manner. Other solutions link data from the blockchain to the source database.
 
-\subsection{Linked data}
+\subsection{Linked data and semantic world}
 Similar there is a revival going on in the semantic RDF linked data field of science. These solutions also accept that there are often large source databases with curated data. These solutions find ways to enable distributed storage and identity with links to source databases (for instance Solid).
 
 \subsection{Attribute based identity or data sharing}
@@ -106,7 +161,13 @@ there are many attempts to build a storage system that contains some sort of blo
 
 \section{Design of the Schluss personal data locker}
 \subsection{UI/UX}
-verhaal naar de tv lopen
+Through the centuries, technology has become more ambient. This trend will probably continue. Personal data is used in various forms throughout the day. We would love to make the use of the vault as painless and unobtrusive. However we realize we are not there yet. Some of the uses of personal is hard to make unobtrusive under all conditions. Think for instance about the use of a DNA sequence. Right now the hospital and it's value chain of Biolab and high throughput sequencer all work in tandem to create a file containing your DNA sequence. You as an individual do not see anything of this file and must trust the value chain to keep it save. If we were to put the user in control, he or she would have to walk around with a file somehow, creating an obstacle in using the solution (right now the user doesn't have to do anything), but also someone (doctor and other people) need to readin the file. This creates a problem with compatibility. To prevent this situation we choose a specific use case. Just like a regular vault, you sometimes have get things in and out of it. Our use case focuses on this scenario.
+
+We see a world where a civilian can go up to his TV, place his identity card on a home hub like device and then by using a fingerprint or facial scan, the contents of the vault is shown on the TV. The person can now interact with the data. Choosing to place data in it, or giving other access to it. An alternative would be to use AR and have the person for instance look at his Nerdalize radiator and see his data being processed there.
+
+Benefit of this way of interacting is that this makes connection the physical world, which marketing research has shown that makes the understanding and trust in the solution higher. Something needed to make adoption higher.
+
+All the parts can be created by different companies. The functionality (and thus privacy-by-design) is embedded within the services and standard way of doing things. So for instance Apple and Amazon can create a home hub, which is Schluss personal data vault/locker enabled. That way network extranalities are reduced by allowing all kinds of manufactors to build parts of the system.
 
 \subsection{Digital Trias Politica}
 Separation of power on the Internet can be achieved if people gain independence on three separate functions:
@@ -150,35 +211,69 @@ The storage necessary in this trias politica is based on a distributed mechanism
 
 The schluss vault data management application actually holds "state" information about the data. This application is the only thing that encrypts data for a specific user. That way, if that step has not been done by the user, one might fool the blockchain somehow and get a valid hash link, but the data will not be encrypted for the receiver.
 
-\subsection{Demo application}
-beddenapp
-This layer ties the three others together. It can be used to trigger the requests to the authorization layers, makes sure data is only encrypted for validated receiving users and can access the transaction log of all storage access.
+
+\subsection{Network traceability and meta-data }
+We have to assume that nation states (at least one, the US) can monitor the entire internet. Since the ``trias politica'' will function over the internet and have multiple interactions, it's imperative that the meta data this generates when looking at the entire network does not harm the privacy of it's users. As a first stab at this problem we want to run the trias politica services over TOR.
+
+\subsection{The application itself}
+The application itself is a layer in the system. This layer ties the three others together. It orchestrates the whole dance a user has with the trias politica parts. It can be used to trigger the requests to the authorization layers, makes sure data is only encrypted for validated receiving users and can access the transaction log of all storage access.
+
+The extreme interesting thing is that this application can be hosted on a distributed storage network like IPFS. Which then makes it possible to create a nobackend, serverless, in essence stateless, single page browser app in which you dynamically load your data and can manage it. All client side, with network connections running to the other services over TOR...
+
 
 \subsection{Generic transaction flow}
-receive a request from a doctor wanting to take a look. 
+The flow of data and interaction within the digital trias politica is best explained by giving a couple of examples.
 
-First the identities are checked. Is the request made by a doctor to a person. Then it is checked if access is allowed. Are the person and this doctor in a patient/doctor relationship? And has the user allowed this doctor to view this specific data? 
+\subsubsection{GP's office scenario}
+You have been to your GP's office. There the doctor asked your ID card. With it, you sign a doctor patient relationship agreement on the authorization blockchain. And you grant the doctor access to the patient record. The doctor does some tests and writes the results in his (well, yours actually) patient record.
 
-If all this checks out, the storage layer accepts the request and delivers a hashed link to the requesting party, the data at the end of this link on the distributed storage is encrypted with public key of the receiver and the storage\footnote{Or you could do this in the authorisation layer, this layer already has the link, it looks in the first part of the data and if the signature checks out that it's the right type of data then it's oke. how to prevent faking this and sending the motherload?} makes sure only  the requested type (or even specific file) is encrypted and released via the link.
+A week later you come back and before you walk in, the doctor wants to read his (yours!) patient record.
 
-public and private keys are managed according to the identity and authorization (smart contracts). So some might exist online, may not even be neccessary and some reside in a HSM, for instance an government issued ID card with PKI signed private and public keys.
+First the identities are checked. Is the request made by a doctor to a person. Then it is checked if access is allowed. Are the person and this doctor in a patient/doctor relationship? And has the user allowed this doctor to view this specific data? All of this is information is already available to the application layer. Identifies are verified through the governments eID PKI infrastructure. The fact that the doctor is a doctor is checked with the UZI-register (or in the future attributes via IRMA?). The doctor patient relationship of these specific identities is on a (private) blockchain run by the GP's association. So all this can be checked by the application and storage layer.
 
-%\section{Example implementation}
+If all this checks out, the storage layer accepts the request from the application and delivers a hashed link to the requesting party, the data at the end of this link on the distributed storage is encrypted with public key of the receiver and the storage\footnote{Or you could do this in the authorisation layer, this layer already has the link, it looks in the first part of the data and if the signature checks out that it's the right type of data then it's oke. how to prevent faking this and sending the motherload?} makes sure only the requested type (or even specific file) is encrypted and released via the link.
+
+Public and private keys are managed according to the identity and authorization requirements of the authorization layer which is run in smart contracts. So that dictates the type and level of identification that is required. So some identities might exist online, sometimes identities may not even be necessary and some reside in a HSM, for instance an government issued ID card with PKI signed private and public keys. 
+
+%\subsubsection{Buying a house}
+% Misschien ook laten zien hoe een notaris een brief stuurt naar je inbox. Adres heeft
+% van je ID kaart en je publieke sleutel ook. Die brief kun je dan digitaal ondertekenen
+% en de blockchain checkt dan of alle drie de partijen het document ondertekent hebben, daarna
+% is handel in document automatisch waar
+
+\subsubsection{Generic transaction diagram}
 % TODO: hier dus ook een transaction diagram laten zien
+TODO
+
+\section{Technology demonstrator - BedApp}
+In 2017 we created an application to manage nursery beds. The problem was that hospitals, nurseries, GP's offices and patients need to work together in a timely manner to find the right bed for a patient. Since a hospital bed is more expensive than nursery which is again more expensive than home stay with some form of home help at specific times.
+
+So getting people into the right beds saves a ton of money. How to organize this in a privacy preserving way?
+
+We took the Digital Trias Politica concept and applied it to the situation. We did not have all the technology in place so we made a few design choices to show the principle. We used IPFS as the storage layer. A Javascript application framework called  as the application layer. This application was placed on the IPFS network. TOR was not yet used and the lookup of the application via the URL went via broker servers of IPFS.org. So we were leaking meta-data. For encryption we used GPG. This automatically fixed our choice for identification (known public keys). The authorization was implied. This means that somehow the users of the system already exchanged their public keys. And thus when someone would share data, that data would be encrypted for the recipient and placed in the IPFS storage.
+
+The solution worked as follows: a nursery would make a list of available beds in the Javascript application. This list would then be shared with the fixed other recipients. The user would know who where the recipients, since their public key is used to encrypt the file with available beds. This file would be placed on the IPFS network. Then via IPFS pub/sub mechanism an message would be sent to all interested parties that a new file was available at a certain IPFS content hash. The recipients would then load the new file and display it. In that way, a doctor could see all the available beds of all the hospitals and nurseries in one overview. The doctor in his view was able to then select a bed and reserve it. This would make a change to the file, which would be encrypted for the recipients and put on IPFS (which would generate a new hash link). This hashlink would again be transmitted over the network via pub/sub to all participants.
+
+This way we see the Trias Politica working together. It's not perfect. Identification is still tied to authorization. And the pub/sub mechanism although being an in order list, could cause trouble when the application of the user would not yet see an updated file\footnote{We had no code dealing with that situation.}. What still is needed in this solution is a blockchain'esque way to guarantee authorizations, a mechanism for identification (in our example the public key exchange) and a way to ``login'' into the application since now we just had one application for all the different views (nurseries/hospitals, doctors and transfer nurses).
+
+The solution can be found on github: \SetWatermarkText{}
+
+https://github.com/mho/bedweter
 
 \section{Discussion}
-There is a theory which states that if ever anyone discovers exactly what the Universe is for and why it is here, it will instantly disappear and be replaced by something even more bizarre and inexplicable.
-There is another theory which states that this has already happened.
-
 %\begin{figure}[h!]
 %centering
 %\includegraphics[scale=1.7]{universe.jpg}
 %\caption{The Universe}
 %\label{fig:univerise}
 %\end{figure}
+We believe nearly all data exchanges can be modelled with the digital trias politica. That's why the concept has been applied earlier in corporation infrastructures to deal with the complexity heterogeneity of legacy applications \cite{harnik2011secure}. 
 
-\section{Conclusion}
-``I always thought something was fundamentally wrong with the universe'' \citep{adams1995hitchhiker}
+We also believe and have shown that the parts of such a solution are production ready. It only takes engineering to bring the parts together and by doing that setting the open standard of how this digital trias policita can work on a world wide scale. 
+
+However, this does mean people need to pick up this idea and start engineering. We need to stop pouring money in turn-key, vertical, non-inter-operable, winner-takes-it-all single solutions, but make an effort to take the already working good ideas and define a way to let them work together. 
+
+This engineering effort will bring about the same revolution in our opinion as what the standardization of electrical components and busses did with the IBM personal PC.
 
 \bibliographystyle{plain}
 \bibliography{references}
