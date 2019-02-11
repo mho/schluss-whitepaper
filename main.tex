@@ -11,7 +11,7 @@
 \usepackage{draftwatermark}
 \SetWatermarkText{DRAFT}
 \SetWatermarkScale{5}
-\SetWatermarkColor[gray]{0.4}
+\SetWatermarkColor[gray]{0.9}
 
 \begin{document}
 
@@ -88,6 +88,35 @@ According to \cite{mit_techreport} ``the real issue to address is this natural t
 \end{enumerate}
 In this article we only focus on the first two challenges. Other documents (marketing and business strategy) explain the latter two.
 
+\section{Current alternative solutions}
+\subsection{Three waves of innovations}
+We identify three waves of change coming in the world. 
+
+The first wave can be seen already. This wave manifests as the solutions that are currently on the market that enable you to share a single data item, usually valid for a short period of time. For instance, your age, or the fact if you are now older than 18, or your current credit score. There is a plethora of tools and ecosystems that provide these kinds of data exchange.
+
+The second wave is that of the revival of the semantic web. There are research projects based on linked-data experimenting with general methods and endpoints to enable data exchange. Also people are working on shared ontologies to have a common language to correctly interpret the data. For instance in the Netherlands the MedMij.nl platform is creating an ontology and trust framework for healthcare data exchange. Another interesting emergent technology is the SOLID system of Tim Berners-Lee. Together with Web-ID this system enables users to manage their own data and identity on the web via linked-data based data exchanges. This is a big effort where lot's of people are currently doing research on this wave.
+
+The third and final wave we for see is that the data is not stored in user or company or organisation managed data store, but actually independently in the Internet itself. Already distributed file systems are taking off. For instance the Inter Planetary File system is such a distributed data storage network spanning the world. By that time the ontologies will be far enough, the authorisation and identification systems will have been harmonized and there will be a large installed base of one or more distributed storage networks.
+
+\subsection{Detailed description of alternatives}
+%  alternatieven:
+%  - bron data blijft bij bron, verwijzingen via LOD (Solid) of attributes (Sovrin, IRMA)
+%  - blockchain: maidsafe, filecoin, storj.io, storro
+%  - homo and polymorphic encryption, using encrypted data without the need to decrypt it
+%
+Research is being done on the question how can we safeguard our personal data in a privacy compliant way and be able to control our data and let other use it the way we let them. In this section we discuss only the most relevant technologies related or opposing our way of thinking.
+
+\subsubsection{Source data concept}
+This way of thinking accepts the status quo in some domains where there might for instance be a legal requirement to keep data about persons. That means the system that has the monopoly on storing this data, must be used somehow. Solution then focus on a versatile ways to either copy or link to this data. Blockchain solutions exists that propose to move the data from the existing databases to the (private) blockchain. This way people can use the blockchain to access the data in a transparent manner. Other solutions link data from the blockchain to the source database.
+
+\subsubsection{Linked data and semantic world}
+Similar there is a revival going on in the semantic RDF linked data field of science. These solutions also accept that there are often large source databases with curated data. These solutions find ways to enable distributed storage and identity with links to source databases (for instance Solid).
+
+\subsubsection{Attribute based identity or data sharing}
+Then there are solutions that only share a small amount of data, often via links that can be validated. Think about diploma's that one receives from a university. In systems like Sovrin, a third party can ask an identity to present proof of a diploma upon which this request is then executed by the university delivering an attribute attesting to the fact that you have a diploma. IRMA works in a similar fashion, where you can have a wallet containing validated attributes. This way only relevant data is shared. For instance, when buying alcohol, the NFC connected smart phone validates that the holder is above 18.
+
+\subsubsection{Blockchain storage}
+there are many attempts to build a storage system that contains some sort of blockchain. Examples are but not limited to: maidsafe, bitdust, filecoin/IPFS, storj.io, storro and many more. From these we like IPFS, Bitdust and Storro the most, since they start out as a distributed storage and only separately employ a blockchain for their business case.
 
 %\section{The problems with data storage}
 \section{Design requirements}
@@ -138,27 +167,6 @@ We also focus first on the Dutch and EU jurisdiction regarding personal data. Th
 % legal 2 waar staat de data
 %  conclusie: niet alles, maar zo goed mogelijke kluis
 
-
-\section{Alternative solutions}
-%  alternatieven:
-%  - bron data blijft bij bron, verwijzingen via LOD (Solid) of attributes (Sovrin, IRMA)
-%  - blockchain: maidsafe, filecoin, storj.io, storro
-%  - homo and polymorphic encryption, using encrypted data without the need to decrypt it
-%
-Research is being done on the question how can we safeguard our personal data in a privacy compliant way and be able to control our data and let other use it the way we let them. In this section we discuss only the most relevant technologies related or opposing our way of thinking.
-
-\subsection{Source data concept}
-This way of thinking accepts the status quo in some domains where there might for instance be a legal requirement to keep data about persons. That means the system that has the monopoly on storing this data, must be used somehow. Solution then focus on a versatile ways to either copy or link to this data. Blockchain solutions exists that propose to move the data from the existing databases to the (private) blockchain. This way people can use the blockchain to access the data in a transparent manner. Other solutions link data from the blockchain to the source database.
-
-\subsection{Linked data and semantic world}
-Similar there is a revival going on in the semantic RDF linked data field of science. These solutions also accept that there are often large source databases with curated data. These solutions find ways to enable distributed storage and identity with links to source databases (for instance Solid).
-
-\subsection{Attribute based identity or data sharing}
-Then there are solutions that only share a small amount of data, often via links that can be validated. Think about diploma's that one receives from a university. In systems like Sovrin, a third party can ask an identity to present proof of a diploma upon which this request is then executed by the university delivering an attribute attesting to the fact that you have a diploma. IRMA works in a similar fashion, where you can have a wallet containing validated attributes. This way only relevant data is shared. For instance, when buying alcohol, the NFC connected smart phone validates that the holder is above 18.
-
-\subsection{Blockchain storage}
-there are many attempts to build a storage system that contains some sort of blockchain. Examples are but not limited to: maidsafe, bitdust, filecoin/IPFS, storj.io, storro and many more. From these we like IPFS, Bitdust and Storro the most, since they start out as a distributed storage and only separately employ a blockchain for their business case.
-
 \section{Design of the Schluss personal data locker}
 \subsection{UI/UX}
 Through the centuries, technology has become more ambient. This trend will probably continue. Personal data is used in various forms throughout the day. We would love to make the use of the vault as painless and unobtrusive. However we realize we are not there yet. Some of the uses of personal is hard to make unobtrusive under all conditions. Think for instance about the use of a DNA sequence. Right now the hospital and it's value chain of Biolab and high throughput sequencer all work in tandem to create a file containing your DNA sequence. You as an individual do not see anything of this file and must trust the value chain to keep it save. If we were to put the user in control, he or she would have to walk around with a file somehow, creating an obstacle in using the solution (right now the user doesn't have to do anything), but also someone (doctor and other people) need to readin the file. This creates a problem with compatibility. To prevent this situation we choose a specific use case. Just like a regular vault, you sometimes have get things in and out of it. Our use case focuses on this scenario.
@@ -170,6 +178,7 @@ Benefit of this way of interacting is that this makes connection the physical wo
 All the parts can be created by different companies. The functionality (and thus privacy-by-design) is embedded within the services and standard way of doing things. So for instance Apple and Amazon can create a home hub, which is Schluss personal data vault/locker enabled. That way network extranalities are reduced by allowing all kinds of manufactors to build parts of the system.
 
 \subsection{Digital Trias Politica}
+% TODO: introduce entities as Uncle Bob has defined them.
 Separation of power on the Internet can be achieved if people gain independence on three separate functions:
 
 \begin{itemize}
